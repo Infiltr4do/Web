@@ -105,18 +105,24 @@
 
     <script>
         // Load videos dynamically from video.js
-        const videosGrid = document.getElementById('videosGrid');
-        
-        videos.forEach(videoSrc => {
-            const videoCard = document.createElement('div');
-            videoCard.className = 'video-card';
-            videoCard.innerHTML = `
-                <video controls>
-                    <source src="${videoSrc}" type="video/mp4">
-                    Tu navegador no soporta videos.
-                </video>
-            `;
-            videosGrid.appendChild(videoCard);
+        document.addEventListener('DOMContentLoaded', function() {
+            const videosGrid = document.getElementById('videosGrid');
+            
+            if (videos && videosGrid) {
+                videos.forEach(videoSrc => {
+                    const videoCard = document.createElement('div');
+                    videoCard.className = 'video-card';
+                    videoCard.innerHTML = `
+                        <video controls preload="metadata">
+                            <source src="${videoSrc}" type="video/mp4">
+                            Tu navegador no soporta videos.
+                        </video>
+                    `;
+                    videosGrid.appendChild(videoCard);
+                });
+            } else {
+                console.error('No se encontraron videos o el contenedor de videos');
+            }
         });
     </script>
 </body>
