@@ -109,14 +109,22 @@
             const videosGrid = document.getElementById('videosGrid');
             
             if (videos && videosGrid) {
-                videos.forEach(videoSrc => {
+                videos.forEach(videoUrl => {
+                    // Extract video ID from Streamable URL
+                    const videoId = videoUrl.split('/').pop();
+                    const embedUrl = `https://streamable.com/e/${videoId}`;
+                    
                     const videoCard = document.createElement('div');
                     videoCard.className = 'video-card';
                     videoCard.innerHTML = `
-                        <video controls preload="metadata">
-                            <source src="${videoSrc}" type="video/mp4">
-                            Tu navegador no soporta videos.
-                        </video>
+                        <iframe 
+                            src="${embedUrl}" 
+                            frameborder="0" 
+                            width="100%" 
+                            height="100%" 
+                            allowfullscreen
+                            allow="autoplay; encrypted-media">
+                        </iframe>
                     `;
                     videosGrid.appendChild(videoCard);
                 });
